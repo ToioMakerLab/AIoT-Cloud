@@ -48,6 +48,8 @@ function newTelemetryField(index: number, t: (key: string, options?: Record<stri
     key: `field${index}`,
     label: t('actionDialog.fieldN', { index }),
     unit: '',
+    warningMin: undefined,
+    warningMax: undefined,
   };
 }
 
@@ -242,12 +244,15 @@ export function DeviceTemplatesActionDialog({ currentRow, open, onOpenChange }: 
                 </FormItem>
               )}
             />
-            {form.watch('type') === 'SENSOR_NODE' ? (
-              <div className="grid grid-cols-6 items-start gap-x-4 gap-y-1">
-                <FormLabel className="col-span-2 pt-2 text-right">{t('actionDialog.telemetryFields')}</FormLabel>
-                <div className="col-span-4 space-y-3">
-                  {telemetryFields.fields.map((field, index) => (
-                    <div key={field.id} className="flex items-center gap-2">
+            {/* Telemetry fields apply to every template type, not just sensors — a GATEWAY reports its
+                own health as telemetry (uptime, CPU load, ...) and a RELAY_CURRENT_NODE pairs its
+                relay channels below with per-channel current readings here. */}
+            <div className="grid grid-cols-6 items-start gap-x-4 gap-y-1">
+              <FormLabel className="col-span-2 pt-2 text-right">{t('actionDialog.telemetryFields')}</FormLabel>
+              <div className="col-span-4 space-y-3">
+                {telemetryFields.fields.map((field, index) => (
+                  <div key={field.id} className="space-y-2 rounded-md border p-3">
+                    <div className="flex items-center gap-2">
                       <FormField
                         control={form.control}
                         name={`telemetrySchema.${index}.key`}
@@ -287,20 +292,57 @@ export function DeviceTemplatesActionDialog({ currentRow, open, onOpenChange }: 
                         <IconTrash className="size-4" />
                       </Button>
                     </div>
-                  ))}
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => telemetryFields.append(newTelemetryField(telemetryFields.fields.length + 1, t))}
-                  >
-                    <IconPlus className="size-4" />
-                    {t('actionDialog.addField')}
-                  </Button>
-                </div>
+                    <div className="flex items-center gap-2">
+                      <FormField
+                        control={form.control}
+                        name={`telemetrySchema.${index}.warningMin`}
+                        render={({ field: minField }) => (
+                          <FormItem className="flex-1 space-y-0">
+                            <FormControl>
+                              <Input
+                                type="number"
+                                placeholder={t('actionDialog.warningMin')}
+                                value={minField.value ?? ''}
+                                onChange={(e) => minField.onChange(e.target.value === '' ? undefined : Number(e.target.value))}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name={`telemetrySchema.${index}.warningMax`}
+                        render={({ field: maxField }) => (
+                          <FormItem className="flex-1 space-y-0">
+                            <FormControl>
+                              <Input
+                                type="number"
+                                placeholder={t('actionDialog.warningMax')}
+                                value={maxField.value ?? ''}
+                                onChange={(e) => maxField.onChange(e.target.value === '' ? undefined : Number(e.target.value))}
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+                ))}
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => telemetryFields.append(newTelemetryField(telemetryFields.fields.length + 1, t))}
+                >
+                  <IconPlus className="size-4" />
+                  {t('actionDialog.addField')}
+                </Button>
               </div>
-            ) : null}
-            {form.watch('type') === 'RELAY_NODE' ? (
+            </div>
+            {/* RELAY_CURRENT_NODE pairs these same relay channels with a current sensor (its extra
+                reading lives in telemetrySchema above), and GATEWAY defines its own `restart`
+                BUTTON action — not just RELAY_NODE. */}
+            {['RELAY_NODE', 'RELAY_CURRENT_NODE', 'GATEWAY'].includes(form.watch('type')) ? (
               <div className="grid grid-cols-6 items-start gap-x-4 gap-y-1">
                 <FormLabel className="col-span-2 pt-2 text-right">{t('actionDialog.channels')}</FormLabel>
                 <div className="col-span-4 space-y-3">

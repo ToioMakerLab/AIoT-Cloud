@@ -11,7 +11,8 @@ parse device-specific payload shapes for Kafka-sourced data.
 **"aiot-gate Gateway"** template (`DeviceTemplateType.GATEWAY`), the same way
 any physical device registers against a sensor/relay template. It then
 reports its own health as telemetry (`uptimeSeconds`, `bridgedDeviceCount`,
-`cpuLoadPercent`, `memoryUsagePercent`, `kafkaConnected`) and status
+`cpuLoadPercent`, `cpuTemperatureCelsius`, `memoryUsagePercent`,
+`diskUsagePercent`, `kafkaConnected`) and status
 (`ONLINE`/`OFFLINE`) via the same `devices.telemetry`/`devices.status` Kafka
 topics used for every other device, using its *own* `deviceId` — this is
 what makes gateway health visible on the Devices page alongside the devices

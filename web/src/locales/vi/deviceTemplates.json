@@ -36,6 +36,8 @@
     "telemetryFields": "Trường Telemetry",
     "key": "khóa",
     "unit": "đơn vị",
+    "warningMin": "ngưỡng cảnh báo tối thiểu",
+    "warningMax": "ngưỡng cảnh báo tối đa",
     "addField": "Thêm trường",
     "channels": "Kênh",
     "toggle": "Bật/Tắt",

@@ -36,6 +36,8 @@
     "telemetryFields": "Telemetry Fields",
     "key": "key",
     "unit": "unit",
+    "warningMin": "warning min",
+    "warningMax": "warning max",
     "addField": "Add Field",
     "channels": "Channels",
     "toggle": "Toggle",

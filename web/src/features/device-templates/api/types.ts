@@ -6,6 +6,8 @@ export interface ITelemetryFieldDefinition {
   key: string;
   label: string;
   unit?: string;
+  warningMin?: number;
+  warningMax?: number;
 }
 
 export const DEVICE_ACTION_TYPES = ['TOGGLE', 'BUTTON'] as const;

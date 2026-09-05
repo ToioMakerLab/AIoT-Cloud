@@ -45,6 +45,7 @@ import { NotificationMessageEntity } from '../../modules/notification/notificati
 import { UserEntity } from '../../modules/user/user.entity.ts';
 import { UserSettingsEntity } from '../../modules/user/user-settings.entity.ts';
 import { SnakeNamingStrategy } from '../../snake-naming.strategy.ts';
+import { AddGatewayHardwareTelemetryFields1789600000000 } from '../../database/migrations/1789600000000-AddGatewayHardwareTelemetryFields.ts';
 
 @Injectable()
 export class ApiConfigService {
@@ -159,6 +160,7 @@ export class ApiConfigService {
         AddDeviceLifecycle1789300000000,
         AddDeviceOta1789400000000,
         AddUnclaimedDeviceIgnoredAt1789500000000,
+        AddGatewayHardwareTelemetryFields1789600000000
       ],
       dropSchema: this.isTest,
       type: 'postgres',
