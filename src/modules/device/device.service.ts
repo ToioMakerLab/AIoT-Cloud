@@ -12,7 +12,7 @@ import { Transactional } from 'typeorm-transactional';
 import type { AccessScope } from '../../common/access-scope.util.ts';
 import type { PageDto } from '../../common/dto/page.dto.ts';
 import { ResponseCore } from '../../common/dto/response-core.dto.ts';
-import { encodeBase64 } from '../../common/utils.ts';
+import { encodeBase64,decodeBase64 } from '../../common/utils.ts';
 import { DeviceActionType } from '../../constants/device-action-type.ts';
 import { DevicePushChannel } from '../../constants/device-push-channel.ts';
 import { DEVICE_OFFLINE_THRESHOLD_MS, DeviceStatus } from '../../constants/device-status.ts';
@@ -192,7 +192,7 @@ export class DeviceService {
     // `device.config.mqtt.password` is stored base64-encoded (see updateDeviceConfig); the
     // env-sourced fallback below is already plaintext, so only decode the stored branch.
     const mqttBase = device.config?.mqtt
-      ? { ...device.config.mqtt, password: device.config.mqtt.password }
+      ? { ...device.config.mqtt, password: decodeBase64(device.config.mqtt.password) }
       : {
           broker: mqttFallback.url,
           port: 1883,
