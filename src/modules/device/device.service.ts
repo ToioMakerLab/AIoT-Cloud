@@ -12,7 +12,7 @@ import { Transactional } from 'typeorm-transactional';
 import type { AccessScope } from '../../common/access-scope.util.ts';
 import type { PageDto } from '../../common/dto/page.dto.ts';
 import { ResponseCore } from '../../common/dto/response-core.dto.ts';
-import { encodeBase64,decodeBase64 } from '../../common/utils.ts';
+import { encodeBase64 } from '../../common/utils.ts';
 import { DeviceActionType } from '../../constants/device-action-type.ts';
 import { DevicePushChannel } from '../../constants/device-push-channel.ts';
 import { DEVICE_OFFLINE_THRESHOLD_MS, DeviceStatus } from '../../constants/device-status.ts';
@@ -189,10 +189,8 @@ export class DeviceService {
 
     const mqttFallback = this.apiConfigService.mqttConfig;
 
-    // `device.config.mqtt.password` is stored base64-encoded (see updateDeviceConfig); the
-    // env-sourced fallback below is already plaintext, so only decode the stored branch.
     const mqttBase = device.config?.mqtt
-      ? { ...device.config.mqtt, password: decodeBase64(device.config.mqtt.password) }
+      ? { ...device.config.mqtt }
       : {
           broker: mqttFallback.url,
           port: 1883,
@@ -320,11 +318,11 @@ export class DeviceService {
       return ResponseCore.fail(ErrorCode.NOT_FOUND, 'error.deviceNotFound');
     }
 
-    // Broker passwords are stored base64-encoded rather than plaintext, and never decoded back out
-    // anywhere in a response — not to the client (see `DeviceDto`, which now returns this value
-    // still encoded), and not to the device/gateway either (`getBootConfig`/`resolveKafkaConfig`,
-    // deliberately left as-is, also just pass the stored value through).
-    const mqtt = dto.mqtt !== undefined && dto.mqtt !== null ? { ...dto.mqtt, password: encodeBase64(dto.mqtt.password) } : dto.mqtt;
+    // Kafka broker passwords are stored base64-encoded rather than plaintext, and never decoded
+    // back out anywhere in a response — not to the client (see `DeviceDto`, which now returns this
+    // value still encoded), and not to the device/gateway either (`resolveKafkaConfig`, deliberately
+    // left as-is, also just passes the stored value through).
+    const mqtt = dto.mqtt;
     const kafka = dto.kafka !== undefined && dto.kafka !== null ? { ...dto.kafka, password: encodeBase64(dto.kafka.password) } : dto.kafka;
 
     device.config = {

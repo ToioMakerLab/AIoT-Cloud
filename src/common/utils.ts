@@ -25,9 +25,9 @@ export function validateHash(password: string | undefined, hash: string | undefi
 
 /**
  * Lightweight, reversible obfuscation for values that must be carried through storage and later
- * handed back out verbatim (e.g. a downstream MQTT/Kafka broker password a device needs to
- * connect) — not a substitute for real encryption, just enough that the plaintext isn't sitting
- * directly in the DB column. Pass-through on empty/nullish input.
+ * handed back out verbatim (e.g. a downstream Kafka broker password a device needs to connect) —
+ * not a substitute for real encryption, just enough that the plaintext isn't sitting directly in
+ * the DB column. Pass-through on empty/nullish input.
  */
 export function encodeBase64<T extends string | null | undefined>(value: T): T {
   return (value ? Buffer.from(value, 'utf8').toString('base64') : value) as T;
