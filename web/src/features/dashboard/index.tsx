@@ -276,16 +276,16 @@ export default function Dashboard() {
           </Select>
 
           <div className="flex w-full flex-wrap items-center gap-2 sm:ml-auto sm:w-auto">
-            <Button variant="outline" className="flex-1 sm:flex-initial" onClick={handleExport}>
-              <IconFileExport className="h-4 w-4" />
-              {t('export')}
-            </Button>
-            <Button variant="outline" className="flex-1 sm:flex-initial" onClick={() => void handleCopyJson()}>
-              {jsonCopied ? <IconCheck className="h-4 w-4" /> : <IconCopy className="h-4 w-4" />}
-              {t('copyJson')}
-            </Button>
             {!isGuest && (
               <>
+                <Button variant="outline" className="flex-1 sm:flex-initial" onClick={handleExport}>
+                  <IconFileExport className="h-4 w-4" />
+                  {t('export')}
+                </Button>
+                {/* <Button variant="outline" className="flex-1 sm:flex-initial" onClick={() => void handleCopyJson()}>
+                {jsonCopied ? <IconCheck className="h-4 w-4" /> : <IconCopy className="h-4 w-4" />}
+                {t('copyJson')}
+                </Button> */}
                 <Button variant="outline" className="flex-1 sm:flex-initial" onClick={handleImportClick}>
                   <IconFileImport className="h-4 w-4" />
                   {t('importButton')}
