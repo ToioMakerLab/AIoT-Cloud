@@ -10,6 +10,16 @@
   "save": "Save",
   "nameRequired": "Dashboard name is required.",
   "dashboardSaved": "Dashboard saved",
+  "export": "Export",
+  "importButton": "Import",
+  "copyJson": "Copy JSON",
+  "copyJsonSuccess": "Dashboard JSON copied to clipboard",
+  "copyJsonFailed": "Failed to copy JSON",
+  "import": {
+    "success": "Dashboard imported. Review it and click Save to keep it.",
+    "partialSuccess": "Dashboard imported, but {{count}} panel(s) were skipped because their device wasn't found.",
+    "invalidFile": "That file isn't a valid dashboard config."
+  },
   "panel": {
     "device": "Device",
     "panel": "Panel",
@@ -26,9 +36,7 @@
     "failedToApply": "Failed to apply {{label}}",
     "failedToSendAction": "Failed to send action"
   },
-  "grid": {
-    "emptyState": "No panels yet. Click \"{{addPanel}}\" to get started."
-  },
+  "grid": { "emptyState": "No panels yet. Click \"{{addPanel}}\" to get started." },
   "addPanel": {
     "title": "Add Panel",
     "description": "Pick a device and telemetry field to display on this dashboard.",

@@ -1,5 +1,5 @@
-import { IconDeviceFloppy, IconPlus } from '@tabler/icons-react';
-import { useEffect, useMemo, useState } from 'react';
+import { IconCheck, IconCopy, IconDeviceFloppy, IconFileExport, IconFileImport, IconPlus } from '@tabler/icons-react';
+import { type ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { LanguageSwitch } from '@/components/language-switch';
@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { useIsGuest } from '@/hooks/use-is-guest';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { downloadFile } from '@/lib/download';
 import { getTimeRangeOptions, resolveTimeRange, type TimeRangePreset } from '@/lib/time-range';
 import { useCreateDashboardMutation, useDashboardDevicesQuery, useDashboardsQuery, useUpdateDashboardMutation } from './api/queries';
 import type { IDashboard, IDashboardWidget } from './api/types';
@@ -22,6 +23,7 @@ import { AddPanelDialog } from './components/add-panel-dialog';
 import { DashboardGrid } from './components/dashboard-grid';
 import { DashboardMobile } from './components/dashboard-mobile';
 import { useDeviceSocket } from './hooks/use-device-socket';
+import { buildDashboardConfigExport, parseDashboardConfigImport } from './lib/dashboard-config';
 
 const NEW_DASHBOARD_VALUE = '__new__';
 
@@ -53,6 +55,8 @@ export default function Dashboard() {
   const [timeRangePreset, setTimeRangePreset] = useState<TimeRangePreset>('24h');
   const isGuest = useIsGuest();
   const isMobile = useIsMobile();
+  const importInputRef = useRef<HTMLInputElement>(null);
+  const [jsonCopied, setJsonCopied] = useState(false);
 
   const dashboards = useMemo(() => dashboardsQuery.data ?? [], [dashboardsQuery.data]);
   const devices = useMemo(() => devicesQuery.data ?? [], [devicesQuery.data]);
@@ -157,6 +161,50 @@ export default function Dashboard() {
     }
   };
 
+  const handleExport = () => {
+    const config = buildDashboardConfigExport(draft, devices);
+    const filename = `${draft.name.trim() || t('newDashboard')}.dashboard.json`;
+    downloadFile(JSON.stringify(config, null, 2), filename, 'application/json');
+  };
+
+  const handleCopyJson = async () => {
+    const config = buildDashboardConfigExport(draft, devices);
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(config, null, 2));
+      setJsonCopied(true);
+      toast.success(t('copyJsonSuccess'));
+      setTimeout(() => setJsonCopied(false), 2000);
+    } catch {
+      toast.error(t('copyJsonFailed'));
+    }
+  };
+
+  const handleImportClick = () => {
+    importInputRef.current?.click();
+  };
+
+  // Imported config always lands as a new, unsaved draft (id: null) rather than overwriting
+  // whatever dashboard is currently selected — the user reviews it and clicks Save explicitly.
+  const handleImportFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) return;
+
+    try {
+      const raw = JSON.parse(await file.text());
+      const parsed = parseDashboardConfigImport(raw, devices);
+      setDraft({ id: null, name: parsed.name, isDefault: false, widgets: parsed.widgets });
+      setHasSelectedInitial(true);
+      if (parsed.skippedCount > 0) {
+        toast.warning(t('import.partialSuccess', { count: parsed.skippedCount }));
+      } else {
+        toast.success(t('import.success'));
+      }
+    } catch {
+      toast.error(t('import.invalidFile'));
+    }
+  };
+
   return (
     <>
       <Header fixed>
@@ -227,18 +275,33 @@ export default function Dashboard() {
             </SelectContent>
           </Select>
 
-          {!isGuest && (
-            <div className="flex w-full items-center gap-2 sm:ml-auto sm:w-auto">
-              <Button variant="outline" className="flex-1 sm:flex-initial" onClick={() => setAddPanelOpen(true)}>
-                <IconPlus className="h-4 w-4" />
-                {t('addPanelButton')}
-              </Button>
-              <Button className="flex-1 sm:flex-initial" onClick={handleSave} disabled={isSaving}>
-                <IconDeviceFloppy className="h-4 w-4" />
-                {isSaving ? t('saving') : t('save')}
-              </Button>
-            </div>
-          )}
+          <div className="flex w-full flex-wrap items-center gap-2 sm:ml-auto sm:w-auto">
+            <Button variant="outline" className="flex-1 sm:flex-initial" onClick={handleExport}>
+              <IconFileExport className="h-4 w-4" />
+              {t('export')}
+            </Button>
+            <Button variant="outline" className="flex-1 sm:flex-initial" onClick={() => void handleCopyJson()}>
+              {jsonCopied ? <IconCheck className="h-4 w-4" /> : <IconCopy className="h-4 w-4" />}
+              {t('copyJson')}
+            </Button>
+            {!isGuest && (
+              <>
+                <Button variant="outline" className="flex-1 sm:flex-initial" onClick={handleImportClick}>
+                  <IconFileImport className="h-4 w-4" />
+                  {t('importButton')}
+                </Button>
+                <input ref={importInputRef} type="file" accept=".json,application/json" className="hidden" onChange={handleImportFileChange} />
+                <Button variant="outline" className="flex-1 sm:flex-initial" onClick={() => setAddPanelOpen(true)}>
+                  <IconPlus className="h-4 w-4" />
+                  {t('addPanelButton')}
+                </Button>
+                <Button className="flex-1 sm:flex-initial" onClick={handleSave} disabled={isSaving}>
+                  <IconDeviceFloppy className="h-4 w-4" />
+                  {isSaving ? t('saving') : t('save')}
+                </Button>
+              </>
+            )}
+          </div>
         </div>
 
         {isMobile ? (

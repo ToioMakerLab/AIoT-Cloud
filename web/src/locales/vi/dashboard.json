@@ -10,6 +10,16 @@
   "save": "Lưu",
   "nameRequired": "Tên dashboard là bắt buộc.",
   "dashboardSaved": "Đã lưu dashboard",
+  "export": "Xuất",
+  "importButton": "Nhập",
+  "copyJson": "Sao chép JSON",
+  "copyJsonSuccess": "Đã sao chép JSON dashboard vào bộ nhớ tạm",
+  "copyJsonFailed": "Sao chép JSON thất bại",
+  "import": {
+    "success": "Đã nhập dashboard. Xem lại và nhấn Lưu để giữ lại.",
+    "partialSuccess": "Đã nhập dashboard, nhưng {{count}} bảng điều khiển đã bị bỏ qua vì không tìm thấy thiết bị.",
+    "invalidFile": "Tệp này không phải là cấu hình dashboard hợp lệ."
+  },
   "panel": {
     "device": "Thiết bị",
     "panel": "Bảng điều khiển",
@@ -26,9 +36,7 @@
     "failedToApply": "Áp dụng {{label}} thất bại",
     "failedToSendAction": "Gửi lệnh thất bại"
   },
-  "grid": {
-    "emptyState": "Chưa có bảng điều khiển nào. Nhấn \"{{addPanel}}\" để bắt đầu."
-  },
+  "grid": { "emptyState": "Chưa có bảng điều khiển nào. Nhấn \"{{addPanel}}\" để bắt đầu." },
   "addPanel": {
     "title": "Thêm bảng điều khiển",
     "description": "Chọn thiết bị và trường telemetry để hiển thị trên dashboard này.",
