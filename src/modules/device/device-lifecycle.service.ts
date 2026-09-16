@@ -5,8 +5,8 @@ import { MoreThanOrEqual, Not } from 'typeorm';
 
 import type { AccessScope } from '../../common/access-scope.util.ts';
 import { ResponseCore } from '../../common/dto/response-core.dto.ts';
+import { clamp, computeAgeScore, computeConnectivityScore, roundTo } from '../../common/health-scoring.util.ts';
 import { DeviceLifecycleStage } from '../../constants/device-lifecycle-stage.ts';
-import { DeviceStatus } from '../../constants/device-status.ts';
 import { ErrorCode } from '../../constants/error-code.ts';
 import { DeviceEntity } from './device.entity.ts';
 import { DeviceTelemetryEntity } from './device-telemetry.entity.ts';
@@ -19,9 +19,6 @@ const DEFAULT_EXPECTED_LIFESPAN_MONTHS = 60;
 /** Below this many days since install, with no heartbeat yet, a device stays NEW instead of being scored —
  * there just isn't enough connectivity/telemetry history yet for a score to mean anything. */
 const NEW_STAGE_GRACE_DAYS = 14;
-
-/** Hours of continuous OFFLINE after which the connectivity factor bottoms out at 0. */
-const CONNECTIVITY_FULL_DEGRADE_HOURS = 72;
 
 /** Telemetry lookback window/sample cap the telemetry-health factor's warning-band breach ratio is built from. */
 const TELEMETRY_ASSESSMENT_WINDOW_DAYS = 30;
@@ -46,16 +43,6 @@ const MS_PER_HOUR = 60 * 60 * 1000;
 const MS_PER_DAY = 24 * MS_PER_HOUR;
 /** Average Gregorian month length — good enough for an age estimate, not for billing. */
 const DAYS_PER_MONTH = 30.44;
-
-function clamp(value: number, min: number, max: number): number {
-  return Math.min(max, Math.max(min, value));
-}
-
-function roundTo(value: number, decimals: number): number {
-  const factor = 10 ** decimals;
-
-  return Math.round(value * factor) / factor;
-}
 
 /**
  * Computes and persists a device's lifecycle health assessment (0-100 score + stage) from three
@@ -215,57 +202,45 @@ export class DeviceLifecycleService {
   }
 
   private computeAgeFactor(ageMonths: number, expectedLifespanMonths: number): DeviceLifecycleFactor {
-    const ageRatio = Math.max(0, ageMonths) / expectedLifespanMonths;
-    const score = Math.round(clamp(100 * (1 - ageRatio), 0, 100));
-
     return {
       key: 'age',
       label: 'Device age',
-      score,
+      score: computeAgeScore(ageMonths, expectedLifespanMonths),
       weight: AGE_WEIGHT,
       detail: `${roundTo(Math.max(0, ageMonths), 1)} of ${expectedLifespanMonths} expected months in service`,
     };
   }
 
   private computeConnectivityFactor(device: DeviceEntity, now: Date): DeviceLifecycleFactor {
-    if (device.status === DeviceStatus.ONLINE) {
-      return { key: 'connectivity', label: 'Connectivity', score: 100, weight: CONNECTIVITY_WEIGHT, detail: 'Currently online' };
-    }
+    const { score, detail } = computeConnectivityScore(device.status, device.lastSeenAt, now);
 
-    if (!device.lastSeenAt) {
-      return {
-        key: 'connectivity',
-        label: 'Connectivity',
-        score: 100,
-        weight: CONNECTIVITY_WEIGHT,
-        detail: 'No heartbeat recorded yet',
-      };
-    }
-
-    const offlineHours = (now.getTime() - device.lastSeenAt.getTime()) / MS_PER_HOUR;
-    const score = Math.round(clamp(100 * (1 - offlineHours / CONNECTIVITY_FULL_DEGRADE_HOURS), 0, 100));
-
-    return {
-      key: 'connectivity',
-      label: 'Connectivity',
-      score,
-      weight: CONNECTIVITY_WEIGHT,
-      detail: `Offline for ${roundTo(offlineHours, 1)}h`,
-    };
+    return { key: 'connectivity', label: 'Connectivity', score, weight: CONNECTIVITY_WEIGHT, detail };
   }
 
   /** No telemetry schema, no recent samples, or no warning bands configured are all treated as "no signal" (score 100) rather than penalized. */
   private async computeTelemetryHealthFactor(device: DeviceEntity): Promise<DeviceLifecycleFactor> {
+    const { breaches, totalChecks, detail } = await this.getTelemetryBreachCounts(device);
+
+    if (totalChecks === 0) {
+      return { key: 'telemetryHealth', label: 'Telemetry health', score: 100, weight: TELEMETRY_WEIGHT, detail };
+    }
+
+    const breachRatio = breaches / totalChecks;
+    const score = Math.round(clamp(100 * (1 - breachRatio), 0, 100));
+
+    return { key: 'telemetryHealth', label: 'Telemetry health', score, weight: TELEMETRY_WEIGHT, detail };
+  }
+
+  /**
+   * Counts, across `device`'s recent telemetry, how many warning-band checks were performed and how
+   * many were breached — the raw signal `computeTelemetryHealthFactor` turns into a 0-100 score for a
+   * single device, and that `AssetHealthService` pools (weighted) across every node attached to an asset.
+   */
+  async getTelemetryBreachCounts(device: DeviceEntity): Promise<{ breaches: number; totalChecks: number; detail: string }> {
     const schema = device.template?.telemetrySchema;
 
     if (!schema?.length) {
-      return {
-        key: 'telemetryHealth',
-        label: 'Telemetry health',
-        score: 100,
-        weight: TELEMETRY_WEIGHT,
-        detail: 'Template has no telemetry schema to evaluate',
-      };
+      return { breaches: 0, totalChecks: 0, detail: 'Template has no telemetry schema to evaluate' };
     }
 
     const since = new Date(Date.now() - TELEMETRY_ASSESSMENT_WINDOW_DAYS * MS_PER_DAY);
@@ -276,13 +251,7 @@ export class DeviceLifecycleService {
     });
 
     if (records.length === 0) {
-      return {
-        key: 'telemetryHealth',
-        label: 'Telemetry health',
-        score: 100,
-        weight: TELEMETRY_WEIGHT,
-        detail: `No telemetry in the last ${TELEMETRY_ASSESSMENT_WINDOW_DAYS} days`,
-      };
+      return { breaches: 0, totalChecks: 0, detail: `No telemetry in the last ${TELEMETRY_ASSESSMENT_WINDOW_DAYS} days` };
     }
 
     let totalChecks = 0;
@@ -318,23 +287,12 @@ export class DeviceLifecycleService {
     }
 
     if (totalChecks === 0) {
-      return {
-        key: 'telemetryHealth',
-        label: 'Telemetry health',
-        score: 100,
-        weight: TELEMETRY_WEIGHT,
-        detail: 'No warning bands configured for this template',
-      };
+      return { breaches: 0, totalChecks: 0, detail: 'No warning bands configured for this template' };
     }
 
-    const breachRatio = breaches / totalChecks;
-    const score = Math.round(clamp(100 * (1 - breachRatio), 0, 100));
-
     return {
-      key: 'telemetryHealth',
-      label: 'Telemetry health',
-      score,
-      weight: TELEMETRY_WEIGHT,
+      breaches,
+      totalChecks,
       detail: `${breaches}/${totalChecks} readings outside warning band across ${records.length} samples over the last ${TELEMETRY_ASSESSMENT_WINDOW_DAYS} days`,
     };
   }

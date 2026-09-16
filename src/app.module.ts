@@ -14,6 +14,7 @@ import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } fro
 import { LoggerModule } from 'nestjs-pino';
 import { DataSource } from 'typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
+import { AssetModule } from './modules/asset/asset.module.ts';
 import { AuthModule } from './modules/auth/auth.module.ts';
 import { DashboardModule } from './modules/dashboard/dashboard.module.ts';
 import { DeviceModule } from './modules/device/device.module.ts';
@@ -67,6 +68,7 @@ function redactSensitiveFields(body: unknown): unknown {
     DeviceTemplateModule,
     FactoryModule,
     DeviceModule,
+    AssetModule,
     DashboardModule,
     MqttModule,
     KafkaModule,

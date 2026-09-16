@@ -5,6 +5,7 @@ import { DeviceLifecycleStage } from '../../constants/device-lifecycle-stage.ts'
 import { DevicePushChannel } from '../../constants/device-push-channel.ts';
 import { DeviceStatus } from '../../constants/device-status.ts';
 import { UseDto } from '../../decorators/use-dto.decorator.ts';
+import { AssetEntity } from '../asset/asset.entity.ts';
 import { DeviceTemplateEntity } from '../device-template/device-template.entity.ts';
 import { UserEntity } from '../user/user.entity.ts';
 import { DeviceDto } from './dtos/device.dto.ts';
@@ -47,6 +48,19 @@ export class DeviceEntity extends AbstractEntity<DeviceDto> {
   @Index()
   @Column({ nullable: true, type: 'varchar' })
   factoryId!: string | null;
+
+  /** The physical equipment (motor, pump, ...) this node monitors — see AssetEntity/AssetHealthService. */
+  @Index()
+  @Column({ nullable: true, type: 'varchar' })
+  assetId!: string | null;
+
+  @ManyToOne(() => AssetEntity, { onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'asset_id' })
+  asset?: AssetEntity;
+
+  /** This node's configured importance to its asset's composite health index (see AssetHealthService); default 1. */
+  @Column({ type: 'real', default: 1 })
+  healthWeight!: number;
 
   @Column({ nullable: true, type: 'timestamp' })
   lastSeenAt!: Date | null;

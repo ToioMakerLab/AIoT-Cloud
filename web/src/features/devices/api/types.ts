@@ -187,6 +187,10 @@ export interface IDevice {
   templateId: string;
   template?: IDeviceTemplateSummary;
   userId: string;
+  /** The physical equipment (motor, pump, ...) this node monitors — see `assets` feature. */
+  assetId?: string | null;
+  /** This node's configured importance to its asset's composite health index; defaults to 1. */
+  healthWeight?: number;
   lastSeenAt?: string | null;
   status: DeviceStatus;
   pushChannel: DevicePushChannel;

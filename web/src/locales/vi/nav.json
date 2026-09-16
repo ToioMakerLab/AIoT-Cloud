@@ -6,6 +6,7 @@
   "items": {
     "dashboard": "Tổng quan",
     "devices": "Thiết bị",
+    "assets": "Thiết bị vật lý",
     "deviceTemplates": "Mẫu thiết bị",
     "deviceSecrets": "Khóa bí mật thiết bị",
     "users": "Người dùng",

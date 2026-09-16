@@ -75,6 +75,14 @@ export default function DeviceDetail() {
                 <span>{getDevicePushChannelLabel(device.pushChannel)}</span>
                 <span className="text-muted-foreground">{t('detail.lastSeen')}</span>
                 <span>{device.lastSeenAt ? new Date(device.lastSeenAt).toLocaleString() : t('detail.never')}</span>
+                {device.assetId && (
+                  <>
+                    <span className="text-muted-foreground">{t('detail.linkedAsset')}</span>
+                    <Link to="/assets/$assetId" params={{ assetId: device.assetId }} className="w-fit hover:underline">
+                      {t('detail.viewAsset')}
+                    </Link>
+                  </>
+                )}
               </CardContent>
             </Card>
 

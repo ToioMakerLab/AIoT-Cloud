@@ -1,0 +1,63 @@
+{
+  "list": { "title": "Assets", "subtitle": "Manage physical equipment (motors, pumps, ...) and the device nodes monitoring them." },
+  "toolbar": { "filterPlaceholder": "Filter assets..." },
+  "columns": { "health": "Health" },
+  "types": { "motor": "Motor", "pump": "Pump", "compressor": "Compressor", "fan": "Fan", "other": "Other" },
+  "healthStatuses": { "healthy": "Healthy", "warning": "Warning", "critical": "Critical", "unknown": "Unknown" },
+  "actionDialog": {
+    "nameRequired": "Name is required.",
+    "selectType": "Select a type",
+    "updated": "Asset updated",
+    "created": "Asset created",
+    "editTitle": "Edit Asset",
+    "addTitle": "Add Asset",
+    "editDescription": "Update the asset here.",
+    "addDescription": "Create a new asset here.",
+    "clickSaveHint": "Click save when you're done.",
+    "installedAt": "Installed on",
+    "expectedLifespanMonths": "Expected lifespan (months)",
+    "descriptionPlaceholder": "What this asset is used for..."
+  },
+  "primaryButtons": { "addAsset": "Add Asset" },
+  "deleteDialog": {
+    "deleted": "Asset deleted",
+    "title": "Delete Asset",
+    "confirmPrefix": "Are you sure you want to delete",
+    "warning": "This action will permanently remove the asset from the system. Any device nodes attached to it will simply be detached, not deleted. This cannot be undone.",
+    "name": "Name:",
+    "confirmPlaceholder": "Enter asset name to confirm deletion.",
+    "warningTitle": "Warning!",
+    "warningDescription": "Please be careful, this operation cannot be rolled back."
+  },
+  "detail": { "backToAssets": "Back to assets", "loading": "Loading asset…", "notFound": "Asset not found.", "overview": "Overview" },
+  "healthPanel": {
+    "title": "Health Index",
+    "description": "Aggregated from every device node monitoring this asset — connectivity, telemetry warning-band breaches, and asset age.",
+    "loading": "Loading…",
+    "recompute": "Recompute",
+    "settingsSaved": "Asset settings saved",
+    "healthIndex": "/ 100 health index",
+    "age": "Age",
+    "ageMonths": "{{age}} / {{expected}} months",
+    "remainingLifespan": "Remaining lifespan",
+    "remainingMonths": "{{months}} months",
+    "pastExpectedLifespan": "Past expected lifespan",
+    "lastAssessed": "Last assessed",
+    "installedOn": "Installed on",
+    "expectedLifespanMonths": "Expected lifespan (months)",
+    "save": "Save"
+  },
+  "nodesPanel": {
+    "title": "Device Nodes",
+    "description": "Sensors/relays attached to this asset. Each node's weight controls how much it counts toward the health index above.",
+    "loading": "Loading…",
+    "noNodes": "No device nodes attached yet.",
+    "weight": "Weight",
+    "attach": "Attach",
+    "selectDevice": "Select a device",
+    "noAvailableDevices": "No unattached devices available",
+    "attached": "Node attached",
+    "detached": "Node detached",
+    "weightSaved": "Weight updated"
+  }
+}

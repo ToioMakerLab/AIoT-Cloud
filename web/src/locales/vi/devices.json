@@ -11,7 +11,9 @@
     "template": "Mẫu thiết bị",
     "pushChannel": "Kênh truyền",
     "lastSeen": "Lần cuối online",
-    "never": "Chưa bao giờ"
+    "never": "Chưa bao giờ",
+    "linkedAsset": "Thiết bị",
+    "viewAsset": "Xem thiết bị →"
   },
   "columns": {
     "viewConfig": "Xem cấu hình",

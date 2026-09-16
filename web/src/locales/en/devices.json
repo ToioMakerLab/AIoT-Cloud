@@ -11,7 +11,9 @@
     "template": "Template",
     "pushChannel": "Push channel",
     "lastSeen": "Last seen",
-    "never": "Never"
+    "never": "Never",
+    "linkedAsset": "Asset",
+    "viewAsset": "View asset →"
   },
   "columns": {
     "viewConfig": "View Config",

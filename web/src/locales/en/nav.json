@@ -6,6 +6,7 @@
   "items": {
     "dashboard": "Dashboard",
     "devices": "Devices",
+    "assets": "Assets",
     "deviceTemplates": "Device Templates",
     "deviceSecrets": "Device Secrets",
     "users": "Users",

@@ -42,6 +42,12 @@ export class DeviceDto extends AbstractDto {
   @StringFieldOptional({ nullable: true })
   factoryId?: string | null;
 
+  @StringFieldOptional({ nullable: true })
+  assetId?: string | null;
+
+  @NumberFieldOptional()
+  healthWeight?: number;
+
   @DateFieldOptional({ nullable: true })
   lastSeenAt?: Date | null;
 
@@ -114,6 +120,8 @@ export class DeviceDto extends AbstractDto {
     this.template = entity.template?.toDto();
     this.userId = entity.userId;
     this.factoryId = entity.factoryId;
+    this.assetId = entity.assetId;
+    this.healthWeight = entity.healthWeight;
     this.lastSeenAt = entity.lastSeenAt;
     this.status = entity.status;
     this.pushChannel = entity.pushChannel;

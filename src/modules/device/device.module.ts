@@ -45,7 +45,7 @@ import { UnclaimedDeviceEntity } from './unclaimed-device.entity.ts';
     DeviceTemplateModule,
   ],
   controllers: [DeviceController, DeviceProvisioningController, DeviceSecretController, DeviceLifecycleController, DeviceOtaController],
-  exports: [DeviceService, DeviceOtaService],
+  exports: [DeviceService, DeviceOtaService, DeviceLifecycleService],
   providers: [
     DeviceService,
     DeviceSecretService,

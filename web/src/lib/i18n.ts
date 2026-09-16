@@ -1,5 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import assetsEn from '@/locales/en/assets.json';
 import authEn from '@/locales/en/auth.json';
 import commonEn from '@/locales/en/common.json';
 import dashboardEn from '@/locales/en/dashboard.json';
@@ -14,6 +15,7 @@ import profileEn from '@/locales/en/profile.json';
 import rolesEn from '@/locales/en/roles.json';
 import settingsEn from '@/locales/en/settings.json';
 import usersEn from '@/locales/en/users.json';
+import assetsVi from '@/locales/vi/assets.json';
 import authVi from '@/locales/vi/auth.json';
 import commonVi from '@/locales/vi/common.json';
 import dashboardVi from '@/locales/vi/dashboard.json';
@@ -44,6 +46,7 @@ export const resources = {
     deviceTemplates: deviceTemplatesEn,
     deviceSecrets: deviceSecretsEn,
     factories: factoriesEn,
+    assets: assetsEn,
     notifications: notificationsEn,
     profile: profileEn,
     roles: rolesEn,
@@ -60,6 +63,7 @@ export const resources = {
     deviceTemplates: deviceTemplatesVi,
     deviceSecrets: deviceSecretsVi,
     factories: factoriesVi,
+    assets: assetsVi,
     notifications: notificationsVi,
     profile: profileVi,
     roles: rolesVi,

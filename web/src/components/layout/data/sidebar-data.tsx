@@ -1,6 +1,7 @@
 import {
   IconBuildingFactory2,
   IconCpu,
+  IconEngine,
   IconHelp,
   IconKey,
   IconLayoutDashboard,
@@ -40,6 +41,11 @@ export function useSidebarData(): SidebarData {
             title: t('items.devices'),
             url: '/devices',
             icon: IconCpu,
+          },
+          {
+            title: t('items.assets'),
+            url: '/assets',
+            icon: IconEngine,
           },
           {
             title: t('items.deviceTemplates'),

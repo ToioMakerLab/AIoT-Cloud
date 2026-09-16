@@ -1,0 +1,68 @@
+{
+  "list": { "title": "Thiết bị", "subtitle": "Quản lý thiết bị vật lý (motor, bơm, ...) và các device node giám sát chúng." },
+  "toolbar": { "filterPlaceholder": "Lọc thiết bị..." },
+  "columns": { "health": "Sức khỏe" },
+  "types": { "motor": "Motor", "pump": "Bơm", "compressor": "Máy nén", "fan": "Quạt", "other": "Khác" },
+  "healthStatuses": { "healthy": "Tốt", "warning": "Cảnh báo", "critical": "Nguy cấp", "unknown": "Chưa rõ" },
+  "actionDialog": {
+    "nameRequired": "Tên là bắt buộc.",
+    "selectType": "Chọn loại thiết bị",
+    "updated": "Đã cập nhật thiết bị",
+    "created": "Đã tạo thiết bị",
+    "editTitle": "Sửa thiết bị",
+    "addTitle": "Thêm thiết bị",
+    "editDescription": "Cập nhật thiết bị tại đây.",
+    "addDescription": "Tạo thiết bị mới tại đây.",
+    "clickSaveHint": "Nhấn lưu khi bạn hoàn tất.",
+    "installedAt": "Ngày lắp đặt",
+    "expectedLifespanMonths": "Tuổi thọ dự kiến (tháng)",
+    "descriptionPlaceholder": "Thiết bị này dùng để..."
+  },
+  "primaryButtons": { "addAsset": "Thêm thiết bị" },
+  "deleteDialog": {
+    "deleted": "Đã xóa thiết bị",
+    "title": "Xóa thiết bị",
+    "confirmPrefix": "Bạn có chắc chắn muốn xóa",
+    "warning": "Hành động này sẽ xóa vĩnh viễn thiết bị khỏi hệ thống. Các device node đang gắn với thiết bị sẽ chỉ bị gỡ ra, không bị xóa. Hành động này không thể hoàn tác.",
+    "name": "Tên:",
+    "confirmPlaceholder": "Nhập tên thiết bị để xác nhận xóa.",
+    "warningTitle": "Cảnh báo!",
+    "warningDescription": "Hãy cẩn thận, hành động này không thể hoàn tác."
+  },
+  "detail": {
+    "backToAssets": "Quay lại danh sách thiết bị",
+    "loading": "Đang tải thiết bị…",
+    "notFound": "Không tìm thấy thiết bị.",
+    "overview": "Tổng quan"
+  },
+  "healthPanel": {
+    "title": "Chỉ số sức khỏe",
+    "description": "Tổng hợp từ mọi device node giám sát thiết bị này — kết nối, số lần vượt ngưỡng cảnh báo, và tuổi thiết bị.",
+    "loading": "Đang tải…",
+    "recompute": "Tính lại",
+    "settingsSaved": "Đã lưu cài đặt thiết bị",
+    "healthIndex": "/ 100 chỉ số sức khỏe",
+    "age": "Tuổi thiết bị",
+    "ageMonths": "{{age}} / {{expected}} tháng",
+    "remainingLifespan": "Tuổi thọ còn lại",
+    "remainingMonths": "{{months}} tháng",
+    "pastExpectedLifespan": "Đã vượt tuổi thọ dự kiến",
+    "lastAssessed": "Đánh giá lần cuối",
+    "installedOn": "Ngày lắp đặt",
+    "expectedLifespanMonths": "Tuổi thọ dự kiến (tháng)",
+    "save": "Lưu"
+  },
+  "nodesPanel": {
+    "title": "Device Node",
+    "description": "Các cảm biến/relay gắn với thiết bị này. Trọng số của mỗi node quyết định mức độ ảnh hưởng của nó tới chỉ số sức khỏe ở trên.",
+    "loading": "Đang tải…",
+    "noNodes": "Chưa có device node nào được gắn.",
+    "weight": "Trọng số",
+    "attach": "Gắn",
+    "selectDevice": "Chọn thiết bị",
+    "noAvailableDevices": "Không có thiết bị nào chưa được gắn",
+    "attached": "Đã gắn node",
+    "detached": "Đã gỡ node",
+    "weightSaved": "Đã cập nhật trọng số"
+  }
+}
