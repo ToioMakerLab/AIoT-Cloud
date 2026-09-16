@@ -25,13 +25,13 @@ export default function SignUp() {
         <CardFooter>
           <p className="text-muted-foreground px-8 text-center text-sm">
             {t('signUp.agreePrefix')}{' '}
-            <a href="/terms" className="hover:text-primary underline underline-offset-4">
+            <Link to="/terms" className="hover:text-primary underline underline-offset-4">
               {t('signIn.termsOfService')}
-            </a>{' '}
+            </Link>{' '}
             {t('signIn.and')}{' '}
-            <a href="/privacy" className="hover:text-primary underline underline-offset-4">
+            <Link to="/privacy" className="hover:text-primary underline underline-offset-4">
               {t('signIn.privacyPolicy')}
-            </a>
+            </Link>
             .
           </p>
         </CardFooter>

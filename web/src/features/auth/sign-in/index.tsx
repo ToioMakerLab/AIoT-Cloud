@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import AuthLayout from '../auth-layout';
@@ -18,13 +19,13 @@ export default function SignIn() {
         <CardFooter>
           <p className="text-muted-foreground px-8 text-center text-sm">
             {t('signIn.agreePrefix')}{' '}
-            <a href="/terms" className="hover:text-primary underline underline-offset-4">
+            <Link to="/terms" className="hover:text-primary underline underline-offset-4">
               {t('signIn.termsOfService')}
-            </a>{' '}
+            </Link>{' '}
             {t('signIn.and')}{' '}
-            <a href="/privacy" className="hover:text-primary underline underline-offset-4">
+            <Link to="/privacy" className="hover:text-primary underline underline-offset-4">
               {t('signIn.privacyPolicy')}
-            </a>
+            </Link>
             .
           </p>
         </CardFooter>

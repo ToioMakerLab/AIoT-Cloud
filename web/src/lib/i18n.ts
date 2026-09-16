@@ -9,6 +9,7 @@ import devicesEn from '@/locales/en/devices.json';
 import deviceTemplatesEn from '@/locales/en/deviceTemplates.json';
 import errorsEn from '@/locales/en/errors.json';
 import factoriesEn from '@/locales/en/factories.json';
+import legalEn from '@/locales/en/legal.json';
 import navEn from '@/locales/en/nav.json';
 import notificationsEn from '@/locales/en/notifications.json';
 import profileEn from '@/locales/en/profile.json';
@@ -24,6 +25,7 @@ import devicesVi from '@/locales/vi/devices.json';
 import deviceTemplatesVi from '@/locales/vi/deviceTemplates.json';
 import errorsVi from '@/locales/vi/errors.json';
 import factoriesVi from '@/locales/vi/factories.json';
+import legalVi from '@/locales/vi/legal.json';
 import navVi from '@/locales/vi/nav.json';
 import notificationsVi from '@/locales/vi/notifications.json';
 import profileVi from '@/locales/vi/profile.json';
@@ -46,6 +48,7 @@ export const resources = {
     deviceTemplates: deviceTemplatesEn,
     deviceSecrets: deviceSecretsEn,
     factories: factoriesEn,
+    legal: legalEn,
     assets: assetsEn,
     notifications: notificationsEn,
     profile: profileEn,
@@ -63,6 +66,7 @@ export const resources = {
     deviceTemplates: deviceTemplatesVi,
     deviceSecrets: deviceSecretsVi,
     factories: factoriesVi,
+    legal: legalVi,
     assets: assetsVi,
     notifications: notificationsVi,
     profile: profileVi,

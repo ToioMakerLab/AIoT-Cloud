@@ -1,0 +1,144 @@
+{
+  "backToSignIn": "Back to sign in",
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: September 16, 2026",
+    "intro": "These Terms of Service (\"Terms\") govern your access to and use of AIoT Cloud (the \"Service\"), a platform for provisioning IoT devices, ingesting their telemetry, and monitoring/controlling them through a live dashboard. By creating an account or otherwise using the Service, you agree to these Terms. If you are using the Service on behalf of an organization or factory, you represent that you have the authority to bind that organization.",
+    "sections": [
+      {
+        "heading": "1. Accounts and eligibility",
+        "body": [
+          "You must provide accurate registration information and keep your credentials confidential. You are responsible for all activity performed under your account, including any devices claimed to it and any actions triggered from your dashboard.",
+          "Accounts may belong to a factory/organization; a factory administrator can see and manage devices and dashboards registered under that factory."
+        ]
+      },
+      {
+        "heading": "2. Acceptable use",
+        "body": ["When using the Service you agree not to:"],
+        "items": [
+          "Attempt to gain unauthorized access to another account, device, or factory's data.",
+          "Interfere with or disrupt the Service, its MQTT/Kafka ingestion pipeline, or connected devices/gateways.",
+          "Upload telemetry, device metadata, or dashboard content that is unlawful, infringing, or harmful.",
+          "Use the Service to control devices in a way that creates a safety hazard."
+        ]
+      },
+      {
+        "heading": "3. Devices, telemetry, and dashboards",
+        "body": [
+          "You are responsible for the devices you register and the telemetry they publish. Dashboards, widgets, and alert rules you configure are yours to manage, and you may export or delete them at any time from within the app.",
+          "Device action commands (e.g. toggling a relay) are sent directly to your device's gateway; you are responsible for verifying that any automated or manual action is safe to perform."
+        ]
+      },
+      {
+        "heading": "4. Notifications and third-party integrations",
+        "body": [
+          "The Service can deliver alert notifications through third-party channels you connect (for example, a Zalo bot). Use of those third-party channels is also subject to that provider's own terms, and we are not responsible for their availability or content."
+        ]
+      },
+      {
+        "heading": "5. Service availability and changes",
+        "body": [
+          "The Service is provided on an \"as available\" basis. Features, widget types, and integrations may change, and scheduled or unscheduled downtime may occur. We will try to communicate material changes in advance where practical."
+        ]
+      },
+      {
+        "heading": "6. Termination",
+        "body": [
+          "You may stop using the Service and request account deletion at any time. We may suspend or terminate access if these Terms are violated, or to protect the Service, other users, or connected devices/gateways from harm."
+        ]
+      },
+      {
+        "heading": "7. Disclaimer and limitation of liability",
+        "body": [
+          "The Service is provided without warranties of any kind, express or implied. To the fullest extent permitted by law, we are not liable for indirect, incidental, or consequential damages arising from your use of the Service, including damages resulting from device malfunction, telemetry loss, or delayed/failed action commands."
+        ]
+      },
+      {
+        "heading": "8. Changes to these Terms",
+        "body": [
+          "We may update these Terms from time to time. Continued use of the Service after an update constitutes acceptance of the revised Terms."
+        ]
+      },
+      {
+        "heading": "9. Contact",
+        "body": ["Questions about these Terms can be directed to your factory administrator or the AIoT Cloud project team."]
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: September 16, 2026",
+    "intro": "This Privacy Policy explains what information AIoT Cloud (the \"Service\") collects, how it is used, and the choices you have. It applies to your account, the devices you register, and the telemetry those devices generate.",
+    "sections": [
+      {
+        "heading": "1. Information we collect",
+        "body": ["We collect the following categories of information:"],
+        "items": [
+          "Account information — name, email, password (stored hashed), role, and factory membership.",
+          "Device data — device identifiers, templates, registration/claim history, and last-known status.",
+          "Telemetry data — sensor readings and status events published by your devices over MQTT/Kafka.",
+          "Dashboard and configuration data — saved dashboard layouts, widgets, notification/alert rules.",
+          "Usage and log data — sign-in activity, API request logs, and error diagnostics, used to keep the Service secure and reliable."
+        ]
+      },
+      {
+        "heading": "2. How we use information",
+        "body": ["We use the information above to:"],
+        "items": [
+          "Operate core features — authenticate you, ingest and display telemetry, and execute device action commands you trigger.",
+          "Send alert notifications you configure, including via connected third-party channels (e.g. a Zalo bot).",
+          "Maintain security, detect abuse, and debug issues affecting the Service or the MQTT/Kafka gateway.",
+          "Improve the Service based on aggregated, non-identifying usage patterns."
+        ]
+      },
+      {
+        "heading": "3. How information is shared",
+        "body": [
+          "We do not sell your personal information or telemetry data. Information is shared only: within your factory/organization (so administrators can manage shared devices and dashboards), with third-party notification channels you explicitly connect, and where required to comply with law or protect the Service from abuse."
+        ]
+      },
+      {
+        "heading": "4. Data retention",
+        "body": [
+          "Account and device data are retained for as long as your account is active. Telemetry history is retained to support dashboards and alerting, and can be deleted along with your device or account. You can request deletion of your account and associated data at any time."
+        ]
+      },
+      {
+        "heading": "5. Data security",
+        "body": [
+          "Access to the Service is protected with JWT-based authentication and role-based access control. Passwords are stored hashed, not in plain text. While we take reasonable measures to protect your data, no system can be guaranteed 100% secure."
+        ]
+      },
+      {
+        "heading": "6. Your rights and choices",
+        "body": ["Depending on your account role, you can:"],
+        "items": [
+          "View, update, or delete your account profile from Settings.",
+          "Export or delete dashboards, devices, and notification rules you own.",
+          "Disconnect third-party notification channels at any time.",
+          "Request a copy or deletion of your data by contacting your factory administrator."
+        ]
+      },
+      {
+        "heading": "7. Cookies and local storage",
+        "body": [
+          "The Service uses browser local storage (not third-party advertising cookies) to keep you signed in and to remember preferences such as theme and language."
+        ]
+      },
+      {
+        "heading": "8. Children's privacy",
+        "body": ["The Service is intended for use by factory/organization staff and is not directed at children under 13."]
+      },
+      {
+        "heading": "9. Changes to this policy",
+        "body": [
+          "We may update this Privacy Policy from time to time. Material changes will be reflected by updating the \"Last updated\" date above."
+        ]
+      },
+      {
+        "heading": "10. Contact",
+        "body": ["Questions about this Privacy Policy or your data can be directed to your factory administrator or the AIoT Cloud project team."]
+      }
+    ]
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "backToSignIn": "Quay lại đăng nhập",
+  "terms": {
+    "title": "Điều khoản dịch vụ",
+    "lastUpdated": "Cập nhật lần cuối: 16 tháng 9, 2026",
+    "intro": "Điều khoản dịch vụ này (\"Điều khoản\") điều chỉnh việc bạn truy cập và sử dụng AIoT Cloud (\"Dịch vụ\") — nền tảng cấp phát thiết bị IoT, thu thập dữ liệu telemetry và giám sát/điều khiển thiết bị thông qua bảng điều khiển trực tiếp. Khi tạo tài khoản hoặc sử dụng Dịch vụ, bạn đồng ý với Điều khoản này. Nếu bạn sử dụng Dịch vụ thay mặt cho một tổ chức hoặc nhà máy, bạn xác nhận rằng mình có thẩm quyền ràng buộc tổ chức đó.",
+    "sections": [
+      {
+        "heading": "1. Tài khoản và điều kiện sử dụng",
+        "body": [
+          "Bạn phải cung cấp thông tin đăng ký chính xác và bảo mật thông tin đăng nhập của mình. Bạn chịu trách nhiệm về mọi hoạt động thực hiện dưới tài khoản của mình, bao gồm các thiết bị đã gán vào tài khoản và các hành động được kích hoạt từ bảng điều khiển.",
+          "Tài khoản có thể thuộc về một nhà máy/tổ chức; quản trị viên nhà máy có thể xem và quản lý thiết bị cũng như dashboard được đăng ký dưới nhà máy đó."
+        ]
+      },
+      {
+        "heading": "2. Quy tắc sử dụng",
+        "body": ["Khi sử dụng Dịch vụ, bạn đồng ý không:"],
+        "items": [
+          "Cố gắng truy cập trái phép vào tài khoản, thiết bị hoặc dữ liệu của nhà máy khác.",
+          "Can thiệp hoặc làm gián đoạn Dịch vụ, đường truyền thu thập dữ liệu MQTT/Kafka, hoặc các thiết bị/gateway đang kết nối.",
+          "Tải lên dữ liệu telemetry, thông tin thiết bị hoặc nội dung dashboard trái pháp luật, xâm phạm quyền hoặc gây hại.",
+          "Sử dụng Dịch vụ để điều khiển thiết bị theo cách gây nguy hiểm về an toàn."
+        ]
+      },
+      {
+        "heading": "3. Thiết bị, dữ liệu telemetry và dashboard",
+        "body": [
+          "Bạn chịu trách nhiệm về các thiết bị mà bạn đăng ký cũng như dữ liệu telemetry mà chúng gửi lên. Dashboard, widget và quy tắc cảnh báo do bạn cấu hình thuộc quyền quản lý của bạn; bạn có thể xuất hoặc xoá chúng bất cứ lúc nào trong ứng dụng.",
+          "Các lệnh điều khiển thiết bị (ví dụ: bật/tắt relay) được gửi trực tiếp đến gateway của thiết bị; bạn có trách nhiệm xác minh rằng bất kỳ hành động tự động hay thủ công nào là an toàn khi thực hiện."
+        ]
+      },
+      {
+        "heading": "4. Thông báo và tích hợp bên thứ ba",
+        "body": [
+          "Dịch vụ có thể gửi thông báo cảnh báo qua các kênh bên thứ ba mà bạn kết nối (ví dụ: Zalo bot). Việc sử dụng các kênh bên thứ ba đó cũng chịu sự điều chỉnh của điều khoản riêng từ nhà cung cấp đó, và chúng tôi không chịu trách nhiệm về tính khả dụng hay nội dung của họ."
+        ]
+      },
+      {
+        "heading": "5. Tính khả dụng và thay đổi Dịch vụ",
+        "body": [
+          "Dịch vụ được cung cấp theo tình trạng \"sẵn có hiện tại\". Các tính năng, loại widget và tích hợp có thể thay đổi, và có thể xảy ra thời gian gián đoạn theo kế hoạch hoặc ngoài kế hoạch. Chúng tôi sẽ cố gắng thông báo trước về các thay đổi quan trọng khi có thể."
+        ]
+      },
+      {
+        "heading": "6. Chấm dứt sử dụng",
+        "body": [
+          "Bạn có thể ngừng sử dụng Dịch vụ và yêu cầu xoá tài khoản bất cứ lúc nào. Chúng tôi có thể tạm ngưng hoặc chấm dứt quyền truy cập nếu Điều khoản này bị vi phạm, hoặc để bảo vệ Dịch vụ, người dùng khác, hoặc các thiết bị/gateway đang kết nối khỏi bị tổn hại."
+        ]
+      },
+      {
+        "heading": "7. Tuyên bố miễn trừ và giới hạn trách nhiệm",
+        "body": [
+          "Dịch vụ được cung cấp mà không có bất kỳ bảo đảm nào, dù rõ ràng hay ngụ ý. Trong phạm vi pháp luật cho phép, chúng tôi không chịu trách nhiệm cho các thiệt hại gián tiếp, ngẫu nhiên hoặc hệ quả phát sinh từ việc bạn sử dụng Dịch vụ, bao gồm thiệt hại do thiết bị hoạt động sai, mất dữ liệu telemetry, hoặc lệnh điều khiển bị trễ/thất bại."
+        ]
+      },
+      {
+        "heading": "8. Thay đổi Điều khoản này",
+        "body": [
+          "Chúng tôi có thể cập nhật Điều khoản này theo thời gian. Việc tiếp tục sử dụng Dịch vụ sau khi cập nhật đồng nghĩa với việc bạn chấp nhận Điều khoản đã sửa đổi."
+        ]
+      },
+      {
+        "heading": "9. Liên hệ",
+        "body": ["Mọi thắc mắc về Điều khoản này có thể gửi đến quản trị viên nhà máy của bạn hoặc đội ngũ dự án AIoT Cloud."]
+      }
+    ]
+  },
+  "privacy": {
+    "title": "Chính sách bảo mật",
+    "lastUpdated": "Cập nhật lần cuối: 16 tháng 9, 2026",
+    "intro": "Chính sách bảo mật này giải thích những thông tin mà AIoT Cloud (\"Dịch vụ\") thu thập, cách sử dụng, và các lựa chọn bạn có. Chính sách áp dụng cho tài khoản của bạn, các thiết bị bạn đăng ký, và dữ liệu telemetry mà các thiết bị đó tạo ra.",
+    "sections": [
+      {
+        "heading": "1. Thông tin chúng tôi thu thập",
+        "body": ["Chúng tôi thu thập các nhóm thông tin sau:"],
+        "items": [
+          "Thông tin tài khoản — họ tên, email, mật khẩu (được lưu dưới dạng băm), vai trò, và nhà máy trực thuộc.",
+          "Dữ liệu thiết bị — mã định danh thiết bị, mẫu thiết bị, lịch sử đăng ký/gán quyền, và trạng thái gần nhất.",
+          "Dữ liệu telemetry — chỉ số cảm biến và sự kiện trạng thái do thiết bị của bạn gửi qua MQTT/Kafka.",
+          "Dữ liệu dashboard và cấu hình — bố cục dashboard đã lưu, widget, quy tắc thông báo/cảnh báo.",
+          "Dữ liệu sử dụng và nhật ký — hoạt động đăng nhập, nhật ký yêu cầu API, và thông tin chẩn đoán lỗi, dùng để giữ Dịch vụ an toàn và ổn định."
+        ]
+      },
+      {
+        "heading": "2. Cách chúng tôi sử dụng thông tin",
+        "body": ["Chúng tôi sử dụng thông tin nêu trên để:"],
+        "items": [
+          "Vận hành các tính năng cốt lõi — xác thực bạn, thu thập và hiển thị dữ liệu telemetry, thực thi các lệnh điều khiển thiết bị mà bạn kích hoạt.",
+          "Gửi thông báo cảnh báo theo cấu hình của bạn, kể cả qua các kênh bên thứ ba đã kết nối (ví dụ: Zalo bot).",
+          "Duy trì an ninh, phát hiện hành vi lạm dụng, và gỡ lỗi các sự cố ảnh hưởng đến Dịch vụ hoặc gateway MQTT/Kafka.",
+          "Cải thiện Dịch vụ dựa trên các mẫu sử dụng tổng hợp, không định danh cá nhân."
+        ]
+      },
+      {
+        "heading": "3. Cách thông tin được chia sẻ",
+        "body": [
+          "Chúng tôi không bán thông tin cá nhân hay dữ liệu telemetry của bạn. Thông tin chỉ được chia sẻ: trong phạm vi nhà máy/tổ chức của bạn (để quản trị viên có thể quản lý thiết bị và dashboard dùng chung), với các kênh thông báo bên thứ ba mà bạn chủ động kết nối, và khi pháp luật yêu cầu hoặc để bảo vệ Dịch vụ khỏi hành vi lạm dụng."
+        ]
+      },
+      {
+        "heading": "4. Thời gian lưu trữ dữ liệu",
+        "body": [
+          "Dữ liệu tài khoản và thiết bị được lưu trữ trong suốt thời gian tài khoản còn hoạt động. Lịch sử telemetry được lưu để phục vụ dashboard và cảnh báo, và có thể bị xoá cùng với thiết bị hoặc tài khoản của bạn. Bạn có thể yêu cầu xoá tài khoản và dữ liệu liên quan bất cứ lúc nào."
+        ]
+      },
+      {
+        "heading": "5. Bảo mật dữ liệu",
+        "body": [
+          "Quyền truy cập Dịch vụ được bảo vệ bằng xác thực dựa trên JWT và kiểm soát truy cập theo vai trò. Mật khẩu được lưu dưới dạng băm, không lưu ở dạng văn bản thuần. Mặc dù chúng tôi áp dụng các biện pháp hợp lý để bảo vệ dữ liệu của bạn, không có hệ thống nào có thể đảm bảo an toàn tuyệt đối 100%."
+        ]
+      },
+      {
+        "heading": "6. Quyền và lựa chọn của bạn",
+        "body": ["Tuỳ theo vai trò tài khoản, bạn có thể:"],
+        "items": [
+          "Xem, cập nhật hoặc xoá hồ sơ tài khoản của mình trong mục Cài đặt.",
+          "Xuất hoặc xoá dashboard, thiết bị và quy tắc thông báo mà bạn sở hữu.",
+          "Ngắt kết nối kênh thông báo bên thứ ba bất cứ lúc nào.",
+          "Yêu cầu một bản sao hoặc yêu cầu xoá dữ liệu bằng cách liên hệ quản trị viên nhà máy."
+        ]
+      },
+      {
+        "heading": "7. Cookie và bộ nhớ cục bộ",
+        "body": [
+          "Dịch vụ sử dụng bộ nhớ cục bộ của trình duyệt (không phải cookie quảng cáo bên thứ ba) để giữ bạn ở trạng thái đăng nhập và ghi nhớ các tuỳ chọn như giao diện và ngôn ngữ."
+        ]
+      },
+      {
+        "heading": "8. Quyền riêng tư của trẻ em",
+        "body": ["Dịch vụ được thiết kế cho nhân viên nhà máy/tổ chức sử dụng và không hướng đến trẻ em dưới 13 tuổi."]
+      },
+      {
+        "heading": "9. Thay đổi chính sách này",
+        "body": [
+          "Chúng tôi có thể cập nhật Chính sách bảo mật này theo thời gian. Các thay đổi quan trọng sẽ được thể hiện qua việc cập nhật ngày \"Cập nhật lần cuối\" ở trên."
+        ]
+      },
+      {
+        "heading": "10. Liên hệ",
+        "body": [
+          "Mọi thắc mắc về Chính sách bảo mật này hoặc dữ liệu của bạn có thể gửi đến quản trị viên nhà máy của bạn hoặc đội ngũ dự án AIoT Cloud."
+        ]
+      }
+    ]
+  }
+}

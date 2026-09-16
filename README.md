@@ -1,12 +1,12 @@
 # AIoT-Cloud
 
-Cloud backend + web dashboard for the **AIoT SIC Capstone Project** — an IoT platform for provisioning devices (via `esp32dev-core` / `provision-pi-gateway`), ingesting their telemetry through an MQTT/Kafka gateway, and giving users a live dashboard to monitor and control them.
+Cloud backend + web dashboard for the **AIoT Cloud** — an IoT platform for provisioning devices (via `esp32dev-core` / `provision-pi-gateway`), ingesting their telemetry through an MQTT/Kafka gateway, and giving users a live dashboard to monitor and control them.
 
 Built with **NestJS 11 + TypeScript + PostgreSQL (TypeORM) + Redis**, paired with a **React 19 + Vite + shadcn/ui** admin dashboard in [`web/`](./web). Both are built into a single Docker image: the API is served under `/api` and the built SPA is served for everything else, so the app ships as one deployable unit.
 
 ## Features
 
-- **JWT auth** (access/refresh tokens, role-based guards: `USER` / `ADMIN` / `ROOT`).
+- **JWT auth** (access/refresh tokens, role-based guards: `USER` / `ADMIN` / `ROOT` / `GUEST`).
 - **Device management** — registration/claiming, per-device config, device templates (telemetry schema + action channels), telemetry history.
 - **MQTT & Kafka, bidirectional** — telemetry/status published by devices/gateways is ingested, persisted, and fanned out as `device.telemetry` / `device.status` domain events (`@nestjs/event-emitter`); actuator commands (`POST /devices/:id/actions`) publish back down to the device over the same channel it uplinks on — see [`mqtt-bidirectional-commands.md`](./docs/mqtt-bidirectional-commands.md) / [`gateway-kafka-integration.md`](./docs/gateway-kafka-integration.md).
 - **Live dashboard** — configurable widget grid (`VALUE` / `CHART` / `ACTION` panels) with two realtime transports, picked per widget type:
