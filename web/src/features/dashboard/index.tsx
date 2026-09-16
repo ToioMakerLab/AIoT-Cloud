@@ -1,4 +1,4 @@
-import { IconCheck, IconCopy, IconDeviceFloppy, IconFileExport, IconFileImport, IconPlus } from '@tabler/icons-react';
+import { IconDeviceFloppy, IconFileExport, IconFileImport, IconPlus } from '@tabler/icons-react';
 import { type ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
@@ -56,7 +56,6 @@ export default function Dashboard() {
   const isGuest = useIsGuest();
   const isMobile = useIsMobile();
   const importInputRef = useRef<HTMLInputElement>(null);
-  const [jsonCopied, setJsonCopied] = useState(false);
 
   const dashboards = useMemo(() => dashboardsQuery.data ?? [], [dashboardsQuery.data]);
   const devices = useMemo(() => devicesQuery.data ?? [], [devicesQuery.data]);
@@ -167,17 +166,17 @@ export default function Dashboard() {
     downloadFile(JSON.stringify(config, null, 2), filename, 'application/json');
   };
 
-  const handleCopyJson = async () => {
-    const config = buildDashboardConfigExport(draft, devices);
-    try {
-      await navigator.clipboard.writeText(JSON.stringify(config, null, 2));
-      setJsonCopied(true);
-      toast.success(t('copyJsonSuccess'));
-      setTimeout(() => setJsonCopied(false), 2000);
-    } catch {
-      toast.error(t('copyJsonFailed'));
-    }
-  };
+  // const handleCopyJson = async () => {
+  //   const config = buildDashboardConfigExport(draft, devices);
+  //   try {
+  //     await navigator.clipboard.writeText(JSON.stringify(config, null, 2));
+  //     setJsonCopied(true);
+  //     toast.success(t('copyJsonSuccess'));
+  //     setTimeout(() => setJsonCopied(false), 2000);
+  //   } catch {
+  //     toast.error(t('copyJsonFailed'));
+  //   }
+  // };
 
   const handleImportClick = () => {
     importInputRef.current?.click();
