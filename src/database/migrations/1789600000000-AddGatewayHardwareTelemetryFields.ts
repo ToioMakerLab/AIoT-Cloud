@@ -30,9 +30,7 @@ export class AddGatewayHardwareTelemetryFields1789600000000 implements Migration
   ];
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`UPDATE "device_templates" SET "telemetry_schema" = $1 WHERE "type" = 'GATEWAY'`, [
-      JSON.stringify(this.telemetrySchema),
-    ]);
+    await queryRunner.query(`UPDATE "device_templates" SET "telemetry_schema" = $1 WHERE "type" = 'GATEWAY'`, [JSON.stringify(this.telemetrySchema)]);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
