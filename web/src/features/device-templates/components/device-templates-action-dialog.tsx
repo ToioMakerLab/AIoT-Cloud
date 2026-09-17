@@ -133,7 +133,7 @@ export function DeviceTemplatesActionDialog({ currentRow, open, onOpenChange }: 
         onOpenChange(state);
       }}
     >
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-full">
         <DialogHeader className="text-left">
           <DialogTitle>{isEdit ? t('actionDialog.editTitle') : t('actionDialog.addTitle')}</DialogTitle>
           <DialogDescription>
