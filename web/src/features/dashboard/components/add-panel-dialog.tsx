@@ -67,7 +67,9 @@ export function AddPanelDialog({ open, onOpenChange, devices, nextSlot, onAdd }:
       title: values.title,
       x: nextSlot.x,
       y: nextSlot.y,
-      w: 3,
+      // 4 (not 3) out of the grid's 12 columns: three panels then tile into a full row (4+4+4=12)
+      // instead of leaving a quarter of the row empty — the common case of a freshly built dashboard.
+      w: 4,
       h: 2,
     });
     onOpenChange(false);

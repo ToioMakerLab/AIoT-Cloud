@@ -1,4 +1,5 @@
 import { IconBolt, IconCpu, IconDeviceUnknown, IconRouter, IconServer2, IconX } from '@tabler/icons-react';
+import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
@@ -172,8 +173,11 @@ export function DevicePanel({ widget, device, latest, history, actionResult, see
     handleTrigger(checked ? (actionDef.onValue ?? 'ON') : (actionDef.offValue ?? 'OFF'));
   };
 
+  // `recordedAt` stays a raw timestamp (not pre-formatted) so the XAxis tick and the tooltip label
+  // can each format it differently below: a compact time-only tick on the axis, and the full
+  // date + time on hover.
   const chartData = history.map((point) => ({
-    recordedAt: new Date(point.recordedAt).toLocaleTimeString(),
+    recordedAt: point.recordedAt,
     value: typeof point.payload[field] === 'number' ? (point.payload[field] as number) : null,
   }));
 
@@ -265,9 +269,14 @@ export function DevicePanel({ widget, device, latest, history, actionResult, see
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="recordedAt" tick={{ fontSize: 10 }} minTickGap={20} />
+              <XAxis
+                dataKey="recordedAt"
+                tick={{ fontSize: 10 }}
+                minTickGap={20}
+                tickFormatter={(value: string) => new Date(value).toLocaleTimeString()}
+              />
               <YAxis tick={{ fontSize: 10 }} width={36} />
-              <Tooltip />
+              <Tooltip labelFormatter={(value: string) => format(new Date(value), 'HH:mm:ss dd/MM/yyyy')} />
               {/* connectNulls: a point whose payload doesn't carry this field maps to `value: null` above —
                   without this, recharts breaks the area at every such gap instead of drawing straight
                   through to the next real point, making it look chopped into disconnected segments.
