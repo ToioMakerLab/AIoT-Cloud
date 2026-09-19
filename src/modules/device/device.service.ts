@@ -1036,7 +1036,7 @@ export class DeviceService {
 
     this.eventEmitter.emit('device.alert', {
       deviceId,
-      message: `[Alert] ${device.name}: ${parsed.message}`,
+      message: `[Cảnh báo] ${device.name}: ${parsed.message}`,
       channels: parsed.channels,
       occurredAt: new Date(),
     } satisfies DeviceAlertEvent);
@@ -1210,7 +1210,7 @@ export class DeviceService {
       const actionText = parsedRule.action ? ` → ${parsedRule.action.key}=${parsedRule.action.value}` : '';
 
       return {
-        message: `${metricLabel}.${parsedRule.field} = ${value ?? '?'} (rule: ${parsedRule.field} ${parsedRule.operator} ${parsedRule.threshold})${actionText}`,
+        message: `${metricLabel}.${parsedRule.field} = ${value ?? '?'} (quy tắc: ${parsedRule.field} ${parsedRule.operator} ${parsedRule.threshold})${actionText}`,
         channels: resolvedChannels,
       };
     }
@@ -1222,7 +1222,7 @@ export class DeviceService {
       const metricLabel = typeof metric === 'string' && metric ? metric : parsedAnomaly.metric;
 
       return {
-        message: `${metricLabel}.${parsedAnomaly.field} = ${value ?? '?'} looks anomalous (z=${parsedAnomaly.z.toFixed(2)}, mean=${parsedAnomaly.mean}, stddev=${parsedAnomaly.stdDev})`,
+        message: `${metricLabel}.${parsedAnomaly.field} = ${value ?? '?'} bất thường (z=${parsedAnomaly.z.toFixed(2)}, trung bình=${parsedAnomaly.mean}, độ lệch chuẩn=${parsedAnomaly.stdDev})`,
         channels: resolvedChannels,
       };
     }

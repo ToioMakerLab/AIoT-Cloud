@@ -32,7 +32,7 @@ export class DeviceWarningListener {
       return;
     }
 
-    const message = `[Warning] ${device.name} went offline`;
+    const message = `[Cảnh báo] ${device.name} đã ngoại tuyến`;
 
     await this.notificationService.sendWarning(device.userId, message, device.offlineAlert.channels ?? undefined, device.id);
   }
@@ -103,10 +103,10 @@ export class DeviceWarningListener {
   }
 
   private buildMessage(deviceName: string, field: TelemetryFieldDefinition, value: number, breach: { min?: number; max?: number }): string {
-    const range = [breach.min !== undefined ? `min ${breach.min}` : null, breach.max !== undefined ? `max ${breach.max}` : null]
+    const range = [breach.min !== undefined ? `tối thiểu ${breach.min}` : null, breach.max !== undefined ? `tối đa ${breach.max}` : null]
       .filter(Boolean)
       .join(', ');
 
-    return `[Warning] ${deviceName}: ${field.label} = ${value}${field.unit ?? ''} (expected ${range})`;
+    return `[Cảnh báo] ${deviceName}: ${field.label} = ${value}${field.unit ?? ''} (kỳ vọng ${range})`;
   }
 }
