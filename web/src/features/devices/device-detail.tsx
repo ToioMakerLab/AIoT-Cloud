@@ -114,6 +114,7 @@ export default function DeviceDetail() {
             <GatewayAutomationPanel
               deviceId={device.id}
               templateType={device.template?.type}
+              pushChannel={device.pushChannel}
               alertRules={device.alertRules}
               failsafe={device.failsafe}
             />

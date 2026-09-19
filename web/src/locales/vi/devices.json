@@ -185,7 +185,9 @@
     "description": "Các quy tắc mà gateway tự lưu và thực thi, không cần chờ máy chủ.",
     "saveRules": "Lưu quy tắc",
     "failsafeDescription": "Trạng thái an toàn gateway tự áp dụng khi không kết nối được máy chủ.",
-    "saveFailsafe": "Lưu chế độ an toàn"
+    "saveFailsafe": "Lưu chế độ an toàn",
+    "pushed": "Đã báo gateway — gateway sẽ tải lại cấu hình ngay",
+    "pushUnsupportedHint": "Đã lưu, nhưng gateway này dùng MQTT/HTTP nên không thể báo từ xa — nó sẽ tự cập nhật ở lần tải cấu hình tiếp theo."
   },
   "offlineAlert": {
     "saved": "Đã lưu quy tắc cảnh báo",
