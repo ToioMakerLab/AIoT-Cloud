@@ -1162,10 +1162,13 @@ export class DeviceService {
   }
 
   /**
-   * Parses `devices.cloud.alerts`'s payload into a renderable message. Two shapes are accepted:
-   * a pre-rendered `{ message }`, or the rule-fired shape `{ metric, reading, rule }` — e.g.
-   * `{ metric: "sensor", reading: { apms: 11.6, ... }, rule: "sensor.apms>10:relay2=ON" }` — which
-   * is rendered via `parseAlertRule`/`reading[field]`. `channels` is accepted either way.
+   * Parses `devices.cloud.alerts`'s payload into a renderable message. Three shapes are accepted:
+   * a pre-rendered `{ message }`; the fixed-threshold rule-fired shape `{ metric, reading, rule }`
+   * — e.g. `{ metric: "sensor", reading: { apms: 11.6, ... }, rule: "sensor.apms>10:relay2=ON" }`
+   * — rendered via `parseAlertRule`/`reading[field]`; or the gateway's statistical anomaly-detector
+   * shape, same envelope but `rule` is an `AnomalyResult.String()` instead, e.g.
+   * `"telemetry.motorCurrent z=-3.48 (mean=0.49, stddev=0.11)"` — rendered via `parseAnomalyRule`.
+   * `channels` is accepted either way.
    */
   private parseAlertPayload(payload: unknown): { message: string; channels?: NotificationChannelType[] } | null {
     if (!payload || typeof payload !== 'object') {
@@ -1196,20 +1199,64 @@ export class DeviceService {
       return null;
     }
 
-    const parsedRule = this.parseAlertRule(rule.trim());
+    const trimmedRule = rule.trim();
+    const readingRecord = reading && typeof reading === 'object' ? (reading as Record<string, unknown>) : undefined;
 
-    if (!parsedRule) {
+    const parsedRule = this.parseAlertRule(trimmedRule);
+
+    if (parsedRule) {
+      const value = readingRecord?.[parsedRule.field];
+      const metricLabel = typeof metric === 'string' && metric ? metric : parsedRule.metric;
+      const actionText = parsedRule.action ? ` → ${parsedRule.action.key}=${parsedRule.action.value}` : '';
+
+      return {
+        message: `${metricLabel}.${parsedRule.field} = ${value ?? '?'} (rule: ${parsedRule.field} ${parsedRule.operator} ${parsedRule.threshold})${actionText}`,
+        channels: resolvedChannels,
+      };
+    }
+
+    const parsedAnomaly = this.parseAnomalyRule(trimmedRule);
+
+    if (parsedAnomaly) {
+      const value = readingRecord?.[parsedAnomaly.field];
+      const metricLabel = typeof metric === 'string' && metric ? metric : parsedAnomaly.metric;
+
+      return {
+        message: `${metricLabel}.${parsedAnomaly.field} = ${value ?? '?'} looks anomalous (z=${parsedAnomaly.z.toFixed(2)}, mean=${parsedAnomaly.mean}, stddev=${parsedAnomaly.stdDev})`,
+        channels: resolvedChannels,
+      };
+    }
+
+    return null;
+  }
+
+  /**
+   * Parses the gateway's statistical anomaly-detector `rule` string — `AnomalyResult.String()` in
+   * AIoT-Gateway (internal/application/anomaly_detector.go), e.g.
+   * `"sensor.temperature z=4.12 (mean=25.30, stddev=3.10)"`. Distinct from `parseAlertRule`'s
+   * fixed-threshold DSL: this is a rolling mean/stddev z-score flag, not a `field><op><threshold>`
+   * condition, so it needs its own shape entirely — `parseAlertPayload` tries this only once
+   * `parseAlertRule` has already failed to match.
+   */
+  private parseAnomalyRule(rule: string): { metric: string; field: string; z: number; mean: number; stdDev: number } | null {
+    const match = /^([^.]+)\.(\S+)\s+z=(-?\d+(?:\.\d+)?)\s*\(mean=(-?\d+(?:\.\d+)?),\s*stddev=(-?\d+(?:\.\d+)?)\)$/.exec(rule.trim());
+
+    if (!match) {
       return null;
     }
 
-    const value = reading && typeof reading === 'object' ? (reading as Record<string, unknown>)[parsedRule.field] : undefined;
-    const metricLabel = typeof metric === 'string' && metric ? metric : parsedRule.metric;
-    const actionText = parsedRule.action ? ` → ${parsedRule.action.key}=${parsedRule.action.value}` : '';
+    // Non-null: none of this regex's capture groups are optional, so a match guarantees all five.
+    const metric = match[1] as string;
+    const field = match[2] as string;
+    const z = Number(match[3]);
+    const mean = Number(match[4]);
+    const stdDev = Number(match[5]);
 
-    return {
-      message: `${metricLabel}.${parsedRule.field} = ${value ?? '?'} (rule: ${parsedRule.field} ${parsedRule.operator} ${parsedRule.threshold})${actionText}`,
-      channels: resolvedChannels,
-    };
+    if (Number.isNaN(z) || Number.isNaN(mean) || Number.isNaN(stdDev)) {
+      return null;
+    }
+
+    return { metric, field, z, mean, stdDev };
   }
 
   /**
