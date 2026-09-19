@@ -97,6 +97,12 @@ export interface DeviceOfflineAlertConfig {
  * `field` is a telemetry key reported by (or bridged through) the gateway; `actionKey` is an
  * action key from some device's `actionSchema`. Parsing/evaluation happens entirely on the
  * gateway; the cloud only stores and relays the raw rule string.
+ *
+ * The action segment may also be the literal keyword `none` instead of `<actionKey>=<actionValue>`
+ * — e.g. "telemetry.motorCurrent>0.4:none" — for a notify-only rule that raises a warning
+ * notification without commanding any actuator. Once the gateway reports the rule fired (via
+ * `devices.cloud.alerts`), the cloud always forwards it as a warning regardless of whether an
+ * action is present — see `DeviceService.parseAlertRule`.
  */
 export type DeviceAlertRule = string;
 

@@ -1213,17 +1213,21 @@ export class DeviceService {
   }
 
   /**
-   * Parses a `"<metric>.<field><op><threshold>[:<key>=<value>]"` rule expression, e.g.
+   * Parses a `"<metric>.<field><op><threshold>[:<key>=<value>|none]"` rule expression, e.g.
    * `"sensor.apms>10:relay2=ON"` — the condition that fired (`sensor.apms > 10`) and, after the
    * optional `:`, the resulting action taken (`relay2=ON`), reusing `parseChannelStateMessage`'s
-   * `key=value` parsing for that part.
+   * `key=value` parsing for that part. The action may also be the literal keyword `none` (e.g.
+   * `"telemetry.motorCurrent>0.4:none"`), for a rule that exists purely to raise a warning
+   * notification with no actuator command attached — `action` comes back `undefined` either way,
+   * since `handleDeviceAlert` sends the notification regardless of whether an action is present;
+   * `none` just makes that intent explicit instead of relying on `key=value` parsing to fail.
    */
   private parseAlertRule(
     rule: string,
   ): { metric: string; field: string; operator: string; threshold: number; action?: { key: string; value: string } } | null {
     const separatorIndex = rule.indexOf(':');
     const condition = separatorIndex === -1 ? rule : rule.slice(0, separatorIndex);
-    const actionText = separatorIndex === -1 ? undefined : rule.slice(separatorIndex + 1);
+    const actionText = separatorIndex === -1 ? undefined : rule.slice(separatorIndex + 1).trim();
 
     const match = /^([^.]+)\.([^<>=!]+?)\s*(>=|<=|==|!=|>|<)\s*(-?\d+(?:\.\d+)?)$/.exec(condition.trim());
 
@@ -1241,6 +1245,8 @@ export class DeviceService {
       return null;
     }
 
-    return { metric, field, operator, threshold, action: actionText ? (this.parseChannelStateMessage(actionText) ?? undefined) : undefined };
+    const hasAction = actionText && actionText.toLowerCase() !== 'none';
+
+    return { metric, field, operator, threshold, action: hasAction ? (this.parseChannelStateMessage(actionText) ?? undefined) : undefined };
   }
 }
