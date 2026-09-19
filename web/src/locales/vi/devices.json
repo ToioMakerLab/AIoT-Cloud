@@ -114,9 +114,9 @@
     "brokers": "Brokers",
     "topics": "Topics",
     "clientId": "Client ID",
-    "alertRulesLabel": "Quy tắc cảnh báo — mỗi dòng một quy tắc, \"<field><operator><threshold>:<actionKey>=<actionValue>\"",
+    "alertRulesLabel": "Quy tắc cảnh báo — mỗi dòng một quy tắc, \"<field><operator><threshold>:[<deviceId>/]<actionKey>=<actionValue>\" (bỏ deviceId để áp dụng cho chính thiết bị báo cáo; thêm deviceId để tác động lên channel của một thiết bị khác)",
     "failsafe": "Chế độ an toàn",
-    "failsafeRulesLabel": "Hành động an toàn — mỗi dòng một hành động, \"<actionKey>=<actionValue>\""
+    "failsafeRulesLabel": "Hành động an toàn — mỗi dòng một hoặc nhiều hành động (cách nhau bằng dấu phẩy), \"[<deviceId>/]<actionKey>=<actionValue>\" (bỏ deviceId để áp dụng cho chính thiết bị này)"
   },
   "configViewDialog": {
     "title": "Cấu hình thiết bị",

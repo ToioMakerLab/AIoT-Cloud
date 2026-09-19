@@ -114,9 +114,9 @@
     "brokers": "Brokers",
     "topics": "Topics",
     "clientId": "Client ID",
-    "alertRulesLabel": "Alert rules — one per line, \"<field><operator><threshold>:<actionKey>=<actionValue>\"",
+    "alertRulesLabel": "Alert rules — one per line, \"<field><operator><threshold>:[<deviceId>/]<actionKey>=<actionValue>\" (omit deviceId to target the device that reported the reading; use it to actuate a different device's channel instead)",
     "failsafe": "Failsafe",
-    "failsafeRulesLabel": "Failsafe actions — one per line, \"<actionKey>=<actionValue>\""
+    "failsafeRulesLabel": "Failsafe actions — one or more per line (comma-separated), \"[<deviceId>/]<actionKey>=<actionValue>\" (omit deviceId to target this device itself)"
   },
   "configViewDialog": {
     "title": "Device Config",

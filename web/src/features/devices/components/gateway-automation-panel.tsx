@@ -106,7 +106,7 @@ export function GatewayAutomationPanel({ deviceId, templateType, pushChannel, al
             rows={4}
             value={rulesText}
             disabled={isGuest}
-            placeholder="amps.value>10:relay_2=OFF"
+            placeholder={'telemetry.motorCurrent>0.4:deviceId/relay1=OFF'}
             onChange={(e) => setRulesText(e.target.value)}
             className="font-mono text-sm"
           />
@@ -135,7 +135,7 @@ export function GatewayAutomationPanel({ deviceId, templateType, pushChannel, al
               rows={3}
               value={failsafeRulesText}
               disabled={isGuest}
-              placeholder="relay_2=OFF"
+              placeholder={'deviceId/relay1=OFF,deviceId/relay2=ON'}
               onChange={(e) => setFailsafeRulesText(e.target.value)}
               className="font-mono text-sm"
             />
