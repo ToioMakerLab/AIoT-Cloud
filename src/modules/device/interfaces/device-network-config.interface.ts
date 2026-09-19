@@ -102,7 +102,10 @@ export interface DeviceOfflineAlertConfig {
  * — e.g. "telemetry.motorCurrent>0.4:none" — for a notify-only rule that raises a warning
  * notification without commanding any actuator. Once the gateway reports the rule fired (via
  * `devices.cloud.alerts`), the cloud always forwards it as a warning regardless of whether an
- * action is present — see `DeviceService.parseAlertRule`.
+ * action is present — see `DeviceService.parseAlertRule`. On the gateway side, `none` is also
+ * distinct from omitting the `:<action>` suffix entirely: an omitted suffix still falls back to
+ * engaging the device's own `DeviceFailsafeConfig.rules`, while an explicit `none` opts out of that
+ * fallback too (see AIoT-Gateway's `domain.AlertRule.NotifyOnly` / `docs/local-alerting-and-failsafe.md`).
  */
 export type DeviceAlertRule = string;
 
