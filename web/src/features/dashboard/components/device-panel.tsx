@@ -276,7 +276,9 @@ export function DevicePanel({ widget, device, latest, history, actionResult, see
                 tickFormatter={(value: string) => new Date(value).toLocaleTimeString()}
               />
               <YAxis tick={{ fontSize: 10 }} width={36} />
-              <Tooltip labelFormatter={(value: string) => format(new Date(value), 'HH:mm:ss dd/MM/yyyy')} />
+              <Tooltip
+                labelFormatter={(label) => (typeof label === 'string' ? format(new Date(label), 'HH:mm:ss dd/MM/yyyy') : label)}
+              />
               {/* connectNulls: a point whose payload doesn't carry this field maps to `value: null` above —
                   without this, recharts breaks the area at every such gap instead of drawing straight
                   through to the next real point, making it look chopped into disconnected segments.
