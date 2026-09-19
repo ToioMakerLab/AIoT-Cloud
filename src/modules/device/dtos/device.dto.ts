@@ -125,12 +125,10 @@ export class DeviceDto extends AbstractDto {
     this.lastSeenAt = entity.lastSeenAt;
     this.status = entity.status;
     this.pushChannel = entity.pushChannel;
-    // The Kafka broker password is stored base64-encoded (see DeviceService.updateDeviceConfig) and
-    // handed back to the client as-is, still encoded — never decoded to plaintext for a client
-    // response, so the real password never round-trips through the API/browser. The dashboard's
-    // edit form should treat this as opaque (blank the field / require re-entry to change it)
-    // rather than pre-filling and re-submitting it. The MQTT password is stored/returned as
-    // plaintext.
+    // Both the Kafka and MQTT broker passwords are stored and returned as plaintext (see
+    // DeviceService.updateDeviceConfig) - Kafka's used to be base64-encoded at rest, but that
+    // was dropped since it only obscured the value from a casual glance rather than actually
+    // protecting it.
     this.config = entity.config && {
       ...entity.config,
       mqtt: entity.config.mqtt && { ...entity.config.mqtt, password: entity.config.mqtt.password },

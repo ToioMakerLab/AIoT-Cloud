@@ -12,7 +12,6 @@ import { Transactional } from 'typeorm-transactional';
 import type { AccessScope } from '../../common/access-scope.util.ts';
 import type { PageDto } from '../../common/dto/page.dto.ts';
 import { ResponseCore } from '../../common/dto/response-core.dto.ts';
-import { encodeBase64 } from '../../common/utils.ts';
 import { DeviceActionType } from '../../constants/device-action-type.ts';
 import { DevicePushChannel } from '../../constants/device-push-channel.ts';
 import { DEVICE_OFFLINE_THRESHOLD_MS, DeviceStatus } from '../../constants/device-status.ts';
@@ -304,7 +303,7 @@ export class DeviceService {
       password: kafkaFallback.sasl?.password ?? null,
     };
 
-    device.config = { ...device.config, kafka: { ...kafka, password: encodeBase64(kafka.password) } };
+    device.config = { ...device.config, kafka };
     await this.deviceRepository.save(device);
 
     return kafka;
@@ -318,12 +317,13 @@ export class DeviceService {
       return ResponseCore.fail(ErrorCode.NOT_FOUND, 'error.deviceNotFound');
     }
 
-    // Kafka broker passwords are stored base64-encoded rather than plaintext, and never decoded
-    // back out anywhere in a response — not to the client (see `DeviceDto`, which now returns this
-    // value still encoded), and not to the device/gateway either (`resolveKafkaConfig`, deliberately
-    // left as-is, also just passes the stored value through).
+    // Kafka broker passwords are stored and returned as plaintext, same as the MQTT password (see
+    // DeviceDto) - previously base64-encoded at rest, which only obscured the value from a casual
+    // glance (base64 isn't encryption) at the cost of a ~33% size inflation and a decode step every
+    // consumer (this dashboard, the gateway's boot-config client) had to carry, so it wasn't worth
+    // keeping.
     const mqtt = dto.mqtt;
-    const kafka = dto.kafka !== undefined && dto.kafka !== null ? { ...dto.kafka, password: encodeBase64(dto.kafka.password) } : dto.kafka;
+    const kafka = dto.kafka;
 
     device.config = {
       ...device.config,
